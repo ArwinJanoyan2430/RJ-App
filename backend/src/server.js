@@ -1,5 +1,9 @@
 import express from "express";
 import path from "path";
+import {ENV} from "./config/env.js";
+import { connectDB } from "./config/db.js";
+import { clerkMiddleware } from '@clerk/express'
+import { start } from "repl";
 
 const app = express();
 const __dirname = path.resolve();
@@ -12,8 +16,11 @@ app.get("/api/health", (req, res) => {
     res.status(200).json({ message: "Success" });
 });
 
+// Clerk middleware
+app.use(clerkMiddleware())
+
 // make app ready for deployment
-if (process.env.NODE_ENV === "production") {
+if (ENV.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../admin/dist")));
 
     app.get("/{*any}", (req, res) => {
@@ -23,6 +30,11 @@ if (process.env.NODE_ENV === "production") {
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+const startServer = async () => {
+    await connectDB();
+    app.listen(ENV.PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
+};
+
+startServer();
