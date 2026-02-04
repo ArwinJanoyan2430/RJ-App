@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/ArwinJanoyan2430/RJ-App/issues"
   },
-  "homepage": "https://github.com/ArwinJanoyan2430/RJ-App#readme"
+  "homepage": "https://github.com/ArwinJanoyan2430/RJ-App#readme",
+  "dependencies": {
+    "firebase": "^12.8.0"
+  }
 }
