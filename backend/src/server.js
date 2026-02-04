@@ -3,6 +3,7 @@ import path from "path";
 import {ENV} from "./config/env.js";
 import { connectDB } from "./config/db.js";
 import {clerkMiddleware } from '@clerk/express';
+import authRoutes from "./routes/auth.routes.js";
 import {serve} from "inngest/express";
 import {functions,inngest} from "./config/inngest.js";
 
@@ -12,6 +13,17 @@ const __dirname = path.resolve();
 // middleware
 app.use(express.json());
 
+// simple CORS to allow dev Admin/Mobile origins to call API (adjust origin as needed)
+app.use((req, res, next) => {
+    const origin = process.env.CORS_ORIGIN || "http://localhost:5173";
+    res.header("Access-Control-Allow-Origin", origin);
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+    res.header("Access-Control-Allow-Credentials", "true");
+    if (req.method === "OPTIONS") return res.sendStatus(200);
+    next();
+});
+
 // test route
 app.get("/api/health", (req, res) => {
     res.status(200).json({ message: "Success" });
@@ -20,6 +32,9 @@ app.get("/api/health", (req, res) => {
 app.use(express.json());
 app.use("/api/inngest", serve({client:inngest, functions}));
 app.use(clerkMiddleware())
+
+// auth routes
+app.use('/api/auth', authRoutes);
 
 // make app ready for deployment
 if (ENV.NODE_ENV === "production") {
