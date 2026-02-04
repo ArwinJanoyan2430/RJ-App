@@ -6,6 +6,7 @@ import {clerkMiddleware } from '@clerk/express';
 import authRoutes from "./routes/auth.routes.js";
 import {serve} from "inngest/express";
 import {functions,inngest} from "./config/inngest.js";
+import aminRoutes from "./routes/admin.route.js";
 
 const app = express();
 const __dirname = path.resolve();
@@ -35,6 +36,7 @@ app.use(clerkMiddleware())
 
 // auth routes
 app.use('/api/auth', authRoutes);
+app.use('/api/admin', aminRoutes);
 
 // make app ready for deployment
 if (ENV.NODE_ENV === "production") {

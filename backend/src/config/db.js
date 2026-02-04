@@ -1,11 +1,17 @@
 import mongoose from "mongoose";
-import {ENV} from "./env.js";
+import { ENV } from "./env.js";
+
 export const connectDB = async () => {
-    try {
-        const conn = await mongoose.connect(ENV.DB_URL)
-        console.log('Connected to MongoDB:', conn.connection.host);
-    } catch (error) {
-        console.error('Error connecting to MongoDB:', error);
-        process.exit(1);
-    } 
+  if (mongoose.connection.readyState >= 1) return; // Already connected
+
+  try {
+    const conn = await mongoose.connect(ENV.DB_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("✅ Connected to MongoDB:", conn.connection.host, "DB:", conn.connection.name);
+  } catch (error) {
+    console.error("❌ Error connecting to MongoDB:", error);
+    process.exit(1);
+  }
 };

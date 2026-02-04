@@ -3,6 +3,7 @@ import {connectDB} from "./db.js";
 import {User} from "../models/user.model.js";
 
 export const inngest = new Inngest({id:"rjecshoppapp"})
+
 const syncUser = inngest.createFunction(
     {id:"sync-user"},
     {event:"clerk/user.created"},
