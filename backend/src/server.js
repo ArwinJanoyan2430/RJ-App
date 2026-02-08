@@ -7,6 +7,8 @@ import authRoutes from "./routes/auth.routes.js";
 import {serve} from "inngest/express";
 import {functions,inngest} from "./config/inngest.js";
 import aminRoutes from "./routes/admin.route.js";
+import userRoutes from "./routes/user.routes.js";
+import orderRoutes from "./routes/order.route.js";
 
 const app = express();
 const __dirname = path.resolve();
@@ -37,6 +39,8 @@ app.use(clerkMiddleware())
 // auth routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', aminRoutes);
+app.use('/api/users', userRoutes);
+app.use("/api/orders", orderRoutes);
 
 // make app ready for deployment
 if (ENV.NODE_ENV === "production") {
