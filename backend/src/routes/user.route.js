@@ -1,21 +1,28 @@
-import {Router} from "express";
-import { addAddresses } from "../controllers/user.controller.js";
-import { getAddresses } from "../controllers/user.controller.js";
-import { updateAddresses } from "../controllers/user.controller.js";
-import { deleteAddresses } from "../controllers/user.controller.js";
+import { Router } from "express";
+import {
+  addAddress,
+  addToWishlist,
+  deleteAddress,
+  getAddresses,
+  getWishlist,
+  removeFromWishlist,
+  updateAddress,
+} from "../controllers/user.controller.js";
+import { protectRoute } from "../middleware/auth.middleware.js";
 
 const router = Router();
+
 router.use(protectRoute);
 
-// Address routes
-router.post("/addresses", addAddresses);
+// address routes
+router.post("/addresses", addAddress);
 router.get("/addresses", getAddresses);
-router.put("/addresses/: addressId", updateAddresses);
-router.delete("/addresses/: addressId", deleteAddresses);
+router.put("/addresses/:addressId", updateAddress);
+router.delete("/addresses/:addressId", deleteAddress);
 
-//wishlist routes
+// wishlist routes
 router.post("/wishlist", addToWishlist);
-router.delete("/wishlist/: productId", removeFromWishlist);
+router.delete("/wishlist/:productId", removeFromWishlist);
 router.get("/wishlist", getWishlist);
 
 export default router;
