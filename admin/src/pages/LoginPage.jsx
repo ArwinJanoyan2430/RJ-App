@@ -1,13 +1,10 @@
-import React from 'react';
 import { SignIn } from "@clerk/clerk-react";
-import "../index.css";
 
 function LoginPage() {
   return (
-    <div>LoginPage
+    <div className="h-screen hero">
       <SignIn />
     </div>
-  )
+  );
 }
-
-export default LoginPage
+export default LoginPage;
