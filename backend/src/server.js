@@ -49,7 +49,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
-
+app.use("/api/payment", paymentRoutes);
 
 // make app ready for deployment
 if (ENV.NODE_ENV === "production") {
