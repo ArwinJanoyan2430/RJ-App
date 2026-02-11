@@ -24,6 +24,7 @@ function ProductsPage() {
     queryKey: ["products"],
     queryFn: productApi.getAll,
   });
+  
 
   // creating, update, deleting
   const createProductMutation = useMutation({
@@ -234,9 +235,10 @@ function ProductsPage() {
                   required
                 >
                   <option value="">Select category</option>
+                  <option value="Electronics">Electronics</option>
                   <option value="Accessories">Accessories</option>
                   <option value="Fashion">Fashion</option>
-                  <option value="Cosmetics">Cosmetics</option>
+                  <option value="Sports">Sports</option>
                 </select>
               </div>
             </div>
@@ -244,7 +246,7 @@ function ProductsPage() {
             <div className="grid grid-cols-2 gap-4">
               <div className="form-control">
                 <label className="label">
-                  <span>Price (₱)</span>
+                  <span>Price ($)</span>
                 </label>
                 <input
                   type="number"
